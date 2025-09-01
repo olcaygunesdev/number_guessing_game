@@ -34,15 +34,6 @@ class SettingsScreen extends StatelessWidget {
               
               const SizedBox(height: AppConstants.largePadding),
               
-              // Game Settings
-              _buildSectionHeader(context, 'Game Rules'),
-              _buildNumberLengthSetting(context, settingsViewModel),
-              _buildDuplicateDigitsSetting(context, settingsViewModel),
-              _buildLeadingZeroSetting(context, settingsViewModel),
-              _buildMaxGuessesSetting(context, settingsViewModel),
-              
-              const SizedBox(height: AppConstants.largePadding),
-              
               // Audio & Visual Settings
               _buildSectionHeader(context, 'Audio & Visual'),
               _buildSoundSetting(context, settingsViewModel),
@@ -80,120 +71,6 @@ class SettingsScreen extends StatelessWidget {
         subtitle: Text(settingsViewModel.playerName ?? 'Not set'),
         trailing: const Icon(Icons.edit),
         onTap: () => _showPlayerNameDialog(context, settingsViewModel),
-      ),
-    );
-  }
-
-  Widget _buildNumberLengthSetting(BuildContext context, SettingsViewModel settingsViewModel) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                const Icon(Icons.pin, color: AppColors.primary),
-                const SizedBox(width: 12),
-                const Expanded(
-                  child: Text(
-                    'Number Length',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-                  ),
-                ),
-                Text(
-                  '${settingsViewModel.gameConfig.numberLength} digits',
-                  style: TextStyle(
-                    color: AppColors.textSecondary,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Slider(
-              value: settingsViewModel.gameConfig.numberLength.toDouble(),
-              min: 3,
-              max: 6,
-              divisions: 3,
-              label: '${settingsViewModel.gameConfig.numberLength} digits',
-              onChanged: (value) {
-                settingsViewModel.updateNumberLength(value.toInt());
-              },
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildDuplicateDigitsSetting(BuildContext context, SettingsViewModel settingsViewModel) {
-    return Card(
-      child: SwitchListTile(
-        secondary: const Icon(Icons.repeat, color: AppColors.primary),
-        title: const Text('Allow Duplicate Digits'),
-        subtitle: const Text('Allow same digit to appear multiple times'),
-        value: settingsViewModel.gameConfig.allowDuplicateDigits,
-        onChanged: (value) {
-          settingsViewModel.updateAllowDuplicateDigits(value);
-        },
-      ),
-    );
-  }
-
-  Widget _buildLeadingZeroSetting(BuildContext context, SettingsViewModel settingsViewModel) {
-    return Card(
-      child: SwitchListTile(
-        secondary: const Icon(Icons.looks_one, color: AppColors.primary),
-        title: const Text('Allow Leading Zero'),
-        subtitle: const Text('Allow numbers to start with 0'),
-        value: settingsViewModel.gameConfig.allowLeadingZero,
-        onChanged: (value) {
-          settingsViewModel.updateAllowLeadingZero(value);
-        },
-      ),
-    );
-  }
-
-  Widget _buildMaxGuessesSetting(BuildContext context, SettingsViewModel settingsViewModel) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                const Icon(Icons.quiz, color: AppColors.primary),
-                const SizedBox(width: 12),
-                const Expanded(
-                  child: Text(
-                    'Maximum Guesses',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-                  ),
-                ),
-                Text(
-                  '${settingsViewModel.gameConfig.maxGuesses} guesses',
-                  style: TextStyle(
-                    color: AppColors.textSecondary,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Slider(
-              value: settingsViewModel.gameConfig.maxGuesses.toDouble(),
-              min: 5,
-              max: 20,
-              divisions: 15,
-              label: '${settingsViewModel.gameConfig.maxGuesses} guesses',
-              onChanged: (value) {
-                settingsViewModel.updateMaxGuesses(value.toInt());
-              },
-            ),
-          ],
-        ),
       ),
     );
   }
